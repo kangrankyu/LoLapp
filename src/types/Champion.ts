@@ -1,4 +1,4 @@
-type Champions = {
+export type Champions = {
   version: string;
   id: string;
   key: string;
