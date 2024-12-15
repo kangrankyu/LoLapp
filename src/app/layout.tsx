@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
+import Providers from "@/components/providers/RQProvider";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -31,7 +32,7 @@ export default function RootLayout({
         <Link href={"/champions"}>챔피언</Link>
         <Link href={"/items"}>아이템</Link>
         <Link href={"/rotation"}>무료챔피언</Link>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
