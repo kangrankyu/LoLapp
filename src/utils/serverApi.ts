@@ -1,4 +1,5 @@
 import { Champions } from "@/types/Champion";
+import { Items } from "@/types/Item";
 ("use server");
 
 async function versionsdata() {
@@ -18,7 +19,7 @@ async function fetchChampionList() {
     }
   );
   const data: Champions = await Response.json();
-  return data;
+  return Object.values(data);
 }
 
 async function fetchChampionDetail(id: string) {
@@ -27,5 +28,13 @@ async function fetchChampionDetail(id: string) {
     `https://ddragon.leagueoflegends.com/cdn/${newversion}/data/ko_KR/champion/${id}.json`
   );
   const data: Champions = await Response.json();
-  return data;
+  return Object.values(data);
+}
+async function fetchItemList() {
+  const newversion = versionsdata();
+  const Response = await fetch(
+    `https://ddragon.leagueoflegends.com/cdn/${newversion}/data/ko_KR/item.json`
+  );
+  const data: Items = await Response.json();
+  return Object.values(data);
 }
