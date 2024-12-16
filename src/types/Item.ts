@@ -4,7 +4,6 @@ export type Items = {
   colloq: string;
   plaintext: string;
   into: string[];
-
   image: { [key: string]: string | number };
   gold: { [key: string]: string | number };
   tags: string[];

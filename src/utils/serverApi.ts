@@ -1,16 +1,17 @@
+"use server";
 import { Champions } from "@/types/Champion";
 import { Items } from "@/types/Item";
-("use server");
 
-async function versionsdata() {
+export async function versionsdata() {
   const res = await fetch(
     "https://ddragon.leagueoflegends.com/api/versions.json "
   );
   const version: string[] = await res.json();
   const newversion = version[0];
+
   return newversion;
 }
-async function fetchChampionList() {
+export async function fetchChampionList(): Promise<Champions[]> {
   const newversion = await versionsdata();
   const Response = await fetch(
     ` https://ddragon.leagueoflegends.com/cdn/${newversion}/data/ko_KR/champion.json`,
@@ -18,11 +19,12 @@ async function fetchChampionList() {
       next: { revalidate: 86400 },
     }
   );
-  const data: Champions = await Response.json();
-  return Object.values(data);
+  const data = await Response.json();
+
+  return Object.values(data.data);
 }
 
-async function fetchChampionDetail(id: string) {
+export async function fetchChampionDetail(id: string) {
   const newversion = versionsdata();
   const Response = await fetch(
     `https://ddragon.leagueoflegends.com/cdn/${newversion}/data/ko_KR/champion/${id}.json`
@@ -30,7 +32,7 @@ async function fetchChampionDetail(id: string) {
   const data: Champions = await Response.json();
   return Object.values(data);
 }
-async function fetchItemList() {
+export async function fetchItemList() {
   const newversion = versionsdata();
   const Response = await fetch(
     `https://ddragon.leagueoflegends.com/cdn/${newversion}/data/ko_KR/item.json`

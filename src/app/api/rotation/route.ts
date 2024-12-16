@@ -11,10 +11,6 @@ export async function GET(request: Request) {
     }
   );
   const data: ChampionRotations = await res.json();
-  //tyep 지정한거를
-  // 트러블슈팅 넥스트리스폰스를 사용하는방법을 모르겠음
-  //'Response' 형식에 'ChampionRotations' 형식의 maxNewPlayerLevel, freeChampionIdsForNewPlayers, freeChampionIds 속성이 없습니다.
-  //해결방법 res.json();
 
   return NextResponse.json(data);
 }
