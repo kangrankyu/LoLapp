@@ -4,7 +4,7 @@ import { Items } from "@/types/Item";
 import Image from "next/image";
 const items = async () => {
   const itemdata: Items[] | null = await fetchItemList();
-  console.log(itemdata);
+
   return (
     <>
       <main className="container mx-auto mt-10">
