@@ -32,7 +32,7 @@ export default function Home() {
           </p>
         </Link>
 
-        <Link className="w-auto  h-auto  " href={"/champions"}>
+        <Link className="w-auto  h-auto  " href={"/rotation"}>
           <Image
             src="/rotation.webp"
             alt="Champion image"
