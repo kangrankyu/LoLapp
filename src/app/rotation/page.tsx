@@ -7,7 +7,7 @@ import { Champions } from "@/types/Champion";
 
 const Rotation = () => {
   const { data, error, isLoading } = useQuery<Champions[]>({
-    queryKey: ["championRotation "],
+    queryKey: ["championRotation"],
     queryFn: getChampionRotation,
   });
 
