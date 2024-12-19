@@ -10,46 +10,56 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const champion: Champions = await fetchChampionDetail(params.id);
+  const champion: Champions | null = await fetchChampionDetail(params.id);
+
+  if (!champion) {
+    return {
+      title: "챔피언을찾을수없습니다 ",
+      description: " 해당 내용을 찾을수 없습니다 .",
+    };
+  }
+
   return {
     title: `League Of Legends : ${champion.name}`,
     description: `${champion.lore}`,
     // openGraph: {
     //   title: `League Of Legends : ${champion.name}`,
     //   description: `${champion.lore}`,
-    //   url: `https://lol-app-psi.vercel.app//champions/${params.id}`,
+    //   url: `https://lol-app-psi.vercel.app/champions/${params.id}`,
     // },
   };
 }
-
 const ChampionDetail = async ({ params }: Props) => {
-  const data: Champions = await fetchChampionDetail(params.id);
-  return (
-    <>
-      <main className="container mx-auto mt-10">
-        <div className="max-w-3xl mx-auto   text-rose-600	">
-          <h1 className="text-4xl font-bold mb-4 	">{data.name}</h1>
-          <p className="text-2xl text-gray-600 mb-4">{data.title}</p>
-          <Image
-            className="mx-auto"
-            src={`https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/${data.image.full}`}
-            alt="이미지 입니다 "
-            width={100}
-            height={100}
-          />
+  const data: Champions | null = await fetchChampionDetail(params.id);
 
-          <p className="mt-4">{data.blurb}</p>
-          <h3 className="text-xl font-semibold">스탯</h3>
-          <div className="mt-6">
-            <p>{data.info.attack}</p>
-            <p>{data.info.defense}</p>
-            <p>{data.info.magic}</p>
-            <p>{data.info.difficulty}</p>
+  if (data) {
+    return (
+      <>
+        <main className="container mx-auto mt-10">
+          <div className="max-w-3xl mx-auto   text-rose-600	">
+            <h1 className="text-4xl font-bold mb-4 	">{data.name}</h1>
+            <p className="text-2xl text-gray-600 mb-4">{data.title}</p>
+            <Image
+              className="mx-auto"
+              src={`https://ddragon.leagueoflegends.com/cdn/14.24.1/img/champion/${data.image.full}`}
+              alt="이미지 입니다 "
+              width={100}
+              height={100}
+            />
+
+            <p className="mt-4">{data.blurb}</p>
+            <h3 className="text-xl font-semibold">스탯</h3>
+            <div className="mt-6">
+              <p>{data.info.attack}</p>
+              <p>{data.info.defense}</p>
+              <p>{data.info.magic}</p>
+              <p>{data.info.difficulty}</p>
+            </div>
           </div>
-        </div>
-      </main>
-    </>
-  );
+        </main>
+      </>
+    );
+  }
 };
 
 export default ChampionDetail;
