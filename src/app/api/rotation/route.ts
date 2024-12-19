@@ -12,10 +12,20 @@ export async function GET() {
       },
     }
   );
+  if (res.ok) {
+    console.log("챔피언 로테이션 정보를 가져오는 데 실패했습니다");
+    return NextResponse.json({
+      error: "챔피언 로테이션 정보를 가져오는 데 실패했습니다",
+    });
+  }
   const data: ChampionRotations = await res.json();
   const freeChampionIds: number[] = data.freeChampionIds;
   const championdata = await fetchChampionList();
-  const NewChampion: Champions[] = championdata.filter((champion) => {
+  if (!championdata) {
+    console.error("챔피언데이터 가져오기 실패했습니다 ");
+    return NextResponse.json([]);
+  }
+  const NewChampion: Champions[] | null = championdata.filter((champion) => {
     return freeChampionIds.includes(Number(champion.key));
   });
   return NextResponse.json(NewChampion);
